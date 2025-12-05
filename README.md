@@ -71,6 +71,40 @@ Key Features:
 - `Sales_Analytics_Dashboard.pbix` – Main Power BI dashboard file
 - `Sales_Analytics_Dashboard_Presentation.pptx` – Project presentation
 - `images/` – Screenshots of all dashboard pages
+---
+
+ 🛠 Technical Implementation
+
+🔹 Power Query (Data Cleaning & Transformations)
+- Changed data types using Detect Data Type
+- Corrected Discount column type to Decimal Number
+- Removed unnecessary columns from secondary sheets
+- Standardized text formatting (Trim & Clean on text fields)
+- Checked and validated null and error values (100% clean data)
+
+ 🔹 Data Modeling
+- Single table Star structure for optimized performance
+- Relationship auto-detected (Single table dataset)
+- Applied proper categorization for Segment, Region & Ship Mode fields
+
+🔹 DAX Measures Used
+```DAX
+Total Sales = SUM('Sales'[Sales])
+Total Profit = SUM('Sales'[Profit])
+Total Quantity = SUM('Sales'[Quantity])
+Total Orders = DISTINCTCOUNT('Sales'[Order ID])
+Profit Margin % = DIVIDE([Total Profit], [Total Sales])
+Year = YEAR('Sales'[Order Date])
+Discount Group = 
+SWITCH(
+    TRUE(),
+    'Sales'[Discount] = 0, "0% Discount",
+    'Sales'[Discount] <= 0.10, "0-10%",
+    'Sales'[Discount] <= 0.20, "10-20%",
+    'Sales'[Discount] <= 0.30, "20-30%",
+    "30%+"
+)
+Avg Discount = AVERAGE('Sales'[Discount])
 
 ---
 🚀 How to Use
